@@ -139,9 +139,9 @@ bool BuffDetector::DetectBuff(Mat& img, OtherParam other_param)
 
         if(object.small_rect_.size.height/object.small_rect_.size.width < 3)
         {
-            cout<<"object.big_rect_.angle"<<object.big_rect_.angle<<endl;
-            cout<<"object.small_rect_.angle"<<object.small_rect_.angle<<endl;
-            cout<<"object.diff_angle"<<object.diff_angle<<endl;
+//            cout<<"object.big_rect_.angle"<<object.big_rect_.angle<<endl;
+//            cout<<"object.small_rect_.angle"<<object.small_rect_.angle<<endl;
+//            cout<<"object.diff_angle"<<object.diff_angle<<endl;
 
             if(object.diff_angle<100 && object.diff_angle>80)
             {
@@ -265,14 +265,21 @@ int BuffDetector::BuffDetectTask(Mat& img, OtherParam other_param)
     bool find_flag = DetectBuff(img,other_param);
     int command = 0;
     bool is_change = false;
+    float speed,time;
+    float fake_speed,fake_time;
     if(find_flag)
     {
         find_cnt ++;
-        if(find_cnt % 15==0)
+        int fake_direction_tmp = 0;
+        float fake_speed=0;
+        //15 -》3
+        if(find_cnt)
         {
             //            direction_tmp = getDirection(buff_angle_);
-            direction_tmp = getSimpleDirection(buff_angle_);
+            direction_tmp = getSimpleDirectionAndSpeed(buff_angle_, fake_speed,fake_time);
         }
+//        fake_direction_tmp = getSimpleDirectionAndSpeed(buff_angle_, speed,time);
+        
         Point2f world_offset;
         #define DIRECTION_FILTER
 #ifdef DIRECTION_FILTER
@@ -324,10 +331,46 @@ int BuffDetector::BuffDetectTask(Mat& img, OtherParam other_param)
     return command;
 }
 
-int BuffDetector::getSimpleDirection(float angle)
+int BuffDetector::getSimpleDirectionAndSpeed(float angle, float &speed, float &time)
 {
     diff_angle_ = angle - last_angle_;
     last_angle_ = angle;
+
+    if (Time_flag == 1){
+        t0 = cv::getTickCount();
+        Time_flag = 0;
+    }
+
+    if (LT%2==0){
+
+        if (t1 != 0)
+        {
+            t2 =cv::getTickCount();
+            float timediff = ((t2 - t1)/cv::getTickFrequency())*0.1; // 单位 s
+            speed = diff_angle_/(timediff*57.3);
+            // std::cout<<"This is timediff:: "<<timediff<<" =============This is anglediff::"<<diff_angle_<<std::endl;
+            std::cout<<"The fucking speed:::"<<speed<<std::endl;
+            std::cout<<"The fucking Timer(s):::"<<((t2-t0)/cv::getTickFrequency())<<std::endl;
+            std::cout<<"cv Freq:::"<<cv::getTickFrequency()<<std::endl;
+            ofstream TransDataSpeed("./Speed.txt",ios::app); //存放我们发送数据的文件
+            ofstream TransDataTime("./Time.txt",ios::app); //存放我们发送数据的文件
+            ofstream TransDataTimeDiff("./TimeDiff.txt",ios::app); //存放我们发送数据的文件
+            ofstream TransDataAngleDiff("./AngleDiff.txt",ios::app); //存放我们发送数据的文件
+
+            TransDataSpeed<<speed<<endl;
+            TransDataTime<<((t2-t0)/cv::getTickFrequency())<<endl;
+            TransDataTimeDiff<<timediff<<endl;
+            TransDataAngleDiff<<diff_angle_<<endl;
+
+            TransDataSpeed.close();
+            TransDataTime.close();
+            TransDataTimeDiff.close();
+            TransDataAngleDiff.close();
+
+        }
+        t1 = cv::getTickCount();
+    }
+    LT++;
     if(fabs(diff_angle_) < 10 && fabs(diff_angle_) > 1e-6)
     {
         d_angle_ = (1 - r) * d_angle_ + r * diff_angle_;
@@ -339,7 +382,6 @@ int BuffDetector::getSimpleDirection(float angle)
     else
         return 0;
 }
-
 
 void Object::UpdateOrder()
 {

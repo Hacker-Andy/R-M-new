@@ -323,7 +323,9 @@ public:
         yaw = angle_x_;
         pitch = angle_y_;
     }
-
+    static vector<float>SPEED;
+    static vector<float>TIME;
+    float t0=0,t1=0,t2=0;
     /**
      * @brief 辨别能量机关旋转方向
      * 根据每次识别得到的角度进行滤波，判断能量机关旋转方向
@@ -337,7 +339,7 @@ public:
      * @param 输入能量机关角度
      * @return
      */
-    int getSimpleDirection(float angle);
+    int getSimpleDirectionAndSpeed(float angle,float &speed,float &time);
 
     void readXML(){
         FileStorage fs("../rm-vision/buff_detection/buff_offset.xml", FileStorage::READ);
@@ -384,8 +386,12 @@ public:
     int gray_th_ = 50;
     float buff_angle_ = 0;
     float diff_angle_ = 0;
+    float diff_angle_4ST=0; //This is for speed and time
+    float last_angle_4ST=0;
     int area_ratio_ = 500;
-
+    int LT=1;
+    int ReFit=1;
+    int CNT=0;
     //相关类申明
     AutoControl auto_control;
 private:
@@ -406,8 +412,10 @@ private:
     float d_angle_ = 0;
     float r = 0.1;
     int last_angle_;
+    
     int find_cnt = 0;
     int direction_tmp=0;
+    int Time_flag=1;
 
 public:
     int waitkey_flag = 1;

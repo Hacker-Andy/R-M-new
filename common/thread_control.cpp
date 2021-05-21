@@ -197,7 +197,7 @@ void ThreadControl::ImageProcess()
     {
 #ifndef DEBUG_VIDEO
         // 等待图像生成后进行处理
-        cout<<"produce_index::"<<produce_index<<"     "<<"consumption_index::"<<consumption_index<<endl;
+//        cout<<"produce_index::"<<produce_index<<"     "<<"consumption_index::"<<consumption_index<<endl;
         while(produce_index - consumption_index <= 0){
             END_THREAD;
         }
@@ -249,11 +249,7 @@ void ThreadControl::ImageProcess()
         static bool fast_flag = false;
 #ifdef GET_STM32_THREAD
 //        INFO(command);
-        cout<<"X::"<<angle_x<<"      Y::"<<angle_y<<endl;
-//        if(angle_x != 0){
-//            cout<<"X::"<<(angle_x-40)/4<<"      Y::"<<angle_y<<endl;
-//        }
-
+        cout<<"X::"<<angle_x<<"   Y::"<<angle_y<<"   Command::"<<command<<endl;
         tx_data.get_xy_data(-angle_x*32767/90, -angle_y*32767/90,command);
         serial_.send_data(tx_data);
 #endif
@@ -294,8 +290,8 @@ void ThreadControl::ImageWrite()
         }
         Mat img_tmp;
         image_.copyTo(img_tmp);
-        if(img_tmp.rows == 360)
-            copyMakeBorder(img_tmp, img_tmp, 0, 120, 0, 0, BORDER_CONSTANT, Scalar::all(0));
+        if(img_tmp.rows == 1024)
+            copyMakeBorder(img_tmp, img_tmp, 0, 0, 0, 0, BORDER_CONSTANT, Scalar::all(0));
         writer.updateImage(img_tmp);
         save_image_index++;
     }

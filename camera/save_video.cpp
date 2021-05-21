@@ -12,7 +12,7 @@ SaveVideo::SaveVideo()
     sprintf(tmpbuf, "%s.avi", tmpbuf);
     // CV_FOURCC('I', 'Y', 'U', 'V')CV_FOURCC('M', 'J', 'P', 'G')
 //    video_writer_.open(tmpbuf, CV_FOURCC('X', 'V', 'I', 'D'), 300, cv::Size(640, 480));
-    video_writer_.open(tmpbuf, CV_FOURCC('M', 'J', 'P', 'G') , 60, cv::Size(640, 480));
+    video_writer_.open(tmpbuf, CV_FOURCC('M', 'J', 'P', 'G') , 60, cv::Size(1280, 1024));
     if (!video_writer_.isOpened()) {
         std::cout << "videowriter opened failure!" << std::endl;
         state_ = false;

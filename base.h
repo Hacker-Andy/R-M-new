@@ -17,18 +17,18 @@
 #define BUFF_OFFSET_x 101// 1:80// 3:112
 #define BUFF_OFFSET_y 118// 1:125// 3:69
 
-#define WORLD_OFFSET_X 750
+#define WORLD_OFFSET_X 550
 #define COLOR_TH 15
 
 #define FIRE_CNT 30             // 越小响应越快
 #define RESET_CNT 30            // 丢失目标复位计数 越小响应越快
 #define REPEAT_FIRE_TIME 1000   // 重复发射时间，单位ｍｓ
 #define FIRE_LIMIT_ANGLE 2.0f
-#define RESET_ANGLE -10 // 1:-20 else: -10  // 复位绝对角度
+#define RESET_ANGLE 0 // 1:-20 else: -10  // 复位绝对角度
 // 固定状态
 #define BULLET_SPEED 28.5
 #define BUFF_H 800
-#define BUFF_DISTANCE 7300
+#define BUFF_DISTANCE 6700
 
 #define GALAXY_EXPOSURE_TIME 1500
 // 资源岛测试快速宏定义-<<<----------------
@@ -36,7 +36,7 @@
 #define GALAXY
 #define DEBUG_PLOT
 //****** 线程使能 *****
-#define SHORT_CAMERA_ENABLE 0
+//#define SHORT_CAMERA_ENABLE 0
 #define LONG_CAMERA_ENABLE  1
 #define GET_STM32_THREAD
 //****** 装甲板识别配置 *****
@@ -77,15 +77,15 @@
 #define SHOR_Y 47.5f
 #define SHOR_Z -111.37f
 #define LONG_X 0.0f
-#define LONG_Y -40.7f
-#define LONG_Z -123.0f
+#define LONG_Y -30.7f
+#define LONG_Z -90.0f
 #define PTZ_TO_BARREL 0.0f   // 补兵激光在２３ｍｍ下方
 
 //****** 笔记本调试相关参数 *****
 //#define DEBUG_VIDEO 1
 //#define FORCE_CHANGE_CAMERA
 //#define ARMOR_VIDEO_PATH "/home/andy/YIHENG_ZHBIT_VISION-infantry/R-M_Robot/Videos/test.avi"
-//#define BUFF_VIDEO_PATH "/home/andy/YIHENG_ZHBIT_VISION-infantry/R-M_Robot/Videos/test.avi"
+#define BUFF_VIDEO_PATH "/home/andy/YIHENG_ZHBIT_VISION-infantry/R-M_Robot/Videos/test.avi"
 struct OtherParam
 {
     int color = 0;       // 我方车辆颜色，0是蓝色，1是红色。用于图像预处理
