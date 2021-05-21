@@ -85,7 +85,7 @@
 //#define DEBUG_VIDEO 1
 //#define FORCE_CHANGE_CAMERA
 //#define ARMOR_VIDEO_PATH "/home/andy/YIHENG_ZHBIT_VISION-infantry/R-M_Robot/Videos/test.avi"
-#define BUFF_VIDEO_PATH "/home/andy/YIHENG_ZHBIT_VISION-infantry/R-M_Robot/Videos/test.avi"
+#define BUFF_VIDEO_PATH "/home/andy/YIHENG_ZHBIT_VISION-infantry/R-M_Robot/Videos/TestFinials.avi"
 struct OtherParam
 {
     int color = 0;       // 我方车辆颜色，0是蓝色，1是红色。用于图像预处理

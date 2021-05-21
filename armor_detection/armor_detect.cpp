@@ -74,7 +74,7 @@ void armor::max_match(vector<LED_Stick>& LED,size_t i,size_t j){
     }
 
     float angle_8 = L.angle - R.angle;
-    //    cout << L.angle << " "<< R.angle << endl;
+    //cout << L.angle << " "<< R.angle << endl;
     if(angle_8 < 1e-3f)
         angle_8 = 0.0f;
     float f = error_angle + 0.5 * angle_8;

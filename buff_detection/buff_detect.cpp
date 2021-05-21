@@ -275,7 +275,7 @@ int BuffDetector::BuffDetectTask(Mat& img, OtherParam other_param)
         //15 -》3
         if(find_cnt)
         {
-            //            direction_tmp = getDirection(buff_angle_);
+            //            direc`tion_tmp = getDirection(buff_angle_);
             direction_tmp = getSimpleDirectionAndSpeed(buff_angle_, fake_speed,fake_time);
         }
 //        fake_direction_tmp = getSimpleDirectionAndSpeed(buff_angle_, speed,time);
@@ -505,4 +505,24 @@ double Point_distance(Point2f p1,Point2f p2)
 {
     double Dis=pow(pow((p1.x-p2.x),2)+pow((p1.y-p2.y),2),0.5);
     return Dis;
+}
+
+float BuffDetector::getPredictAngle(vector<float>Speed, vector<float>Time){
+   //fit sin to get W
+   float a=0.785, b=1.884, c = 1.305;
+   // int CNT = 50;             //the number of FIT
+   float lr = 0.001;   //learning rate
+//   float W=0;
+//   float T;
+   float deltasita=0.0;
+   float deltaTime = 0.3;
+   if(ReFit==1){
+       for(int i = 0; i < CNT; i++){
+            w = w - lr*(Speed.at(i) - a*sin(b*Time.at(i) + w)*(-a*cos(b*Time.at(i)+w)));
+       }
+       ReFit = 2;
+   }
+   //get sita
+   deltasita = -a*cos(b*(Time.at(Time.size())+deltaTime) + w)/b + a*cos(b*(Time.at(Time.size())) + w)/b + c*(deltaTime);
+   return deltasita;
 }

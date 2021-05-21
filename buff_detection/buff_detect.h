@@ -23,7 +23,7 @@
 
 using namespace cv;
 using namespace std;
-#define BUFF_DETECT_DEBUG
+//#define BUFF_DETECT_DEBUG
 #ifdef BUFF_DETECT_DEBUG
 // ---- buff debug ----
 #define DEBUG_DRAW_CONTOURS
@@ -423,6 +423,9 @@ public:
 
 
     int command = 0;
+    float getPredictAngle(vector<float>Speed, vector<float>Time);
+private:
+    float w = 0;
 };
 
 double Point_distance(Point2f p1,Point2f p2);
