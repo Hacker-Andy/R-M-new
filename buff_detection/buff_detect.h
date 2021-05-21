@@ -423,9 +423,11 @@ public:
 
 
     int command = 0;
-    float getPredictAngle(vector<float>Speed, vector<float>Time);
+    float getPredictAngle();
 private:
     float w = 0;
+    vector<float>SPEED_C;
+    vector<float>TIME_C;
 };
 
 double Point_distance(Point2f p1,Point2f p2);

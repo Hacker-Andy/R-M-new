@@ -276,7 +276,9 @@ int BuffDetector::BuffDetectTask(Mat& img, OtherParam other_param)
         if(find_cnt)
         {
             //            direc`tion_tmp = getDirection(buff_angle_);
-            direction_tmp = getSimpleDirectionAndSpeed(buff_angle_, fake_speed,fake_time);
+            direction_tmp = getSimpleDirectionAndSpeed(buff_angle_, speed,time);
+            SPEED_C.push_back(speed);
+            TIME_C.push_back(time);
         }
 //        fake_direction_tmp = getSimpleDirectionAndSpeed(buff_angle_, speed,time);
         
@@ -302,6 +304,9 @@ int BuffDetector::BuffDetectTask(Mat& img, OtherParam other_param)
             pre_angle = 0;
         }
         //        cout << "direction " << direction_tmp << endl;
+        float PreAngle=0;
+        PreAngle = getPredictAngle();
+        cout<<"============="<<PreAngle<<"============="<<endl;
 
 #else
         world_offset = Point2f(world_offset_x_ - 500, world_offset_y_  - 500);
@@ -507,7 +512,7 @@ double Point_distance(Point2f p1,Point2f p2)
     return Dis;
 }
 
-float BuffDetector::getPredictAngle(vector<float>Speed, vector<float>Time){
+float BuffDetector::getPredictAngle(){
    //fit sin to get W
    float a=0.785, b=1.884, c = 1.305;
    // int CNT = 50;             //the number of FIT
@@ -518,11 +523,13 @@ float BuffDetector::getPredictAngle(vector<float>Speed, vector<float>Time){
    float deltaTime = 0.3;
    if(ReFit==1){
        for(int i = 0; i < CNT; i++){
-            w = w - lr*(Speed.at(i) - a*sin(b*Time.at(i) + w)*(-a*cos(b*Time.at(i)+w)));
+            w = w - lr*(SPEED_C.at(i) - a*sin(b*TIME_C.at(i) + w)*(-a*cos(b*TIME_C.at(i)+w)));
        }
        ReFit = 2;
    }
+   SPEED_C.clear();
+   TIME_C.clear();
    //get sita
-   deltasita = -a*cos(b*(Time.at(Time.size())+deltaTime) + w)/b + a*cos(b*(Time.at(Time.size())) + w)/b + c*(deltaTime);
+   deltasita = -a*cos(b*(TIME_C.at(TIME_C.size())+deltaTime) + w)/b + a*cos(b*(TIME_C.at(TIME_C.size())) + w)/b + c*(deltaTime);
    return deltasita;
 }
