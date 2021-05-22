@@ -106,8 +106,8 @@ void ThreadControl::GetSTM32()
         //serial_.read_data(&rx_data, mode, color, yaw_offset, pit_offset);
         other_param.mode = mode;
         other_param.color = color;
-        other_param.buff_offset_x = -65;
-        other_param.buff_offset_y = 33;
+        other_param.buff_offset_x = -85;
+        other_param.buff_offset_y = 14;
 //        GimDataPro.ProcessGimbalData(raw_gimbal_yaw, dst_gimbal_yaw);
 //        float gimbal_data = dst_gimbal_yaw;
 //        //        INFO(dst_gimbal_yaw);

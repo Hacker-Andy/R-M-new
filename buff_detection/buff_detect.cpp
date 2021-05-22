@@ -15,6 +15,7 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  ***************************************************************************/
 #include "buff_detect.h"
+#include <cmath>
 
 bool BuffDetector::DetectBuff(Mat& img, OtherParam other_param)
 {
@@ -321,7 +322,11 @@ int BuffDetector::BuffDetectTask(Mat& img, OtherParam other_param)
             cout<<"This is the fucking Angle ======================================="<<pre_angle<<"============="<<endl;
         }
         //cout<<"This is fucking Angle ======================================="<<PreAngle*57<<"============="<<endl;
-
+	float pre_x,pre_y;
+    int R = 5;
+	pre_x = -R * (1-cos(PreAngle));
+	pre_y = R * sin(PreAngle);
+    world_offset = Point2f(pre_x , pre_y);
 #else
         world_offset = Point2f(world_offset_x_ - 500, world_offset_y_  - 500);
 #endif
@@ -535,7 +540,7 @@ float BuffDetector::getPredictAngle(){
 //   float W=0;
 //   float T;
    float deltasita=0.0;
-   float deltaTime = 0.3;
+   float deltaTime = 7.8;
 //   cout<<"This is for Test :: Speed::"<<SPEED_C.at(49)<<endl;
    if(ReFit < 3){
        w=0;
