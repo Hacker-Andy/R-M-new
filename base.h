@@ -6,9 +6,11 @@
 
 // 资源岛测试快速宏定义-<<<----------------
 #define CAMERA1_FILEPATH "/home/andy/Adam-Vision/R-M_Robot-main/camera/camera_param/galaxy_0.xml"
-#define SAVE_VIDEO_THREAD
+//Debug
+//#define SAVE_VIDEO_THREAD
 #define WAITKEY 1
 #define IMAGESHOW
+//Degub End
 // 能量机关自动控制项
 //#define NO_FIRE   // 发现新目标射一发子弹
 //#define NO_REPEAT_FIRE    // 没击打重复发

@@ -323,7 +323,7 @@ int BuffDetector::BuffDetectTask(Mat& img, OtherParam other_param)
         }
         //cout<<"This is fucking Angle ======================================="<<PreAngle*57<<"============="<<endl;
 	float pre_x,pre_y;
-    int R = 5;
+    int R = 2;
 	pre_x = -R * (1-cos(PreAngle));
 	pre_y = R * sin(PreAngle);
     world_offset = Point2f(pre_x , pre_y);
@@ -540,7 +540,7 @@ float BuffDetector::getPredictAngle(){
 //   float W=0;
 //   float T;
    float deltasita=0.0;
-   float deltaTime = 7.8;
+   float deltaTime = 0.3;
 //   cout<<"This is for Test :: Speed::"<<SPEED_C.at(49)<<endl;
    if(ReFit < 3){
        w=0;
@@ -553,6 +553,6 @@ float BuffDetector::getPredictAngle(){
 //   TIME_C.clear();
    //get sita
    deltasita = -a*cos(b*(TIME_C.at(TIME_C.size()-1)+deltaTime) + w)/b + a*cos(b*(TIME_C.size()-1) + w)/b + c*(deltaTime);
-
+   deltasita = deltasita + 10;
    return deltasita;
 }

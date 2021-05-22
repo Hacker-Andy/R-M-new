@@ -23,7 +23,7 @@
 
 using namespace cv;
 using namespace std;
-#define BUFF_DETECT_DEBUG
+//#define BUFF_DETECT_DEBUG
 #ifdef BUFF_DETECT_DEBUG
 // ---- buff debug ----
 #define DEBUG_DRAW_CONTOURS
