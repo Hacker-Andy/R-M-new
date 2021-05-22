@@ -316,7 +316,11 @@ int BuffDetector::BuffDetectTask(Mat& img, OtherParam other_param)
         //        cout << "direction " << direction_tmp << endl;
         float PreAngle=0;
         PreAngle = getPredictAngle();
-        cout<<"This is fucking Angle ======================================="<<PreAngle<<"============="<<endl;
+        if(PreAngle>0 && PreAngle<0.7){
+            pre_angle = PreAngle*57.3;
+            cout<<"This is the fucking Angle ======================================="<<pre_angle<<"============="<<endl;
+        }
+        //cout<<"This is fucking Angle ======================================="<<PreAngle*57<<"============="<<endl;
 
 #else
         world_offset = Point2f(world_offset_x_ - 500, world_offset_y_  - 500);
