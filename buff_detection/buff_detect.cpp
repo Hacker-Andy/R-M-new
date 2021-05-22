@@ -280,9 +280,9 @@ int BuffDetector::BuffDetectTask(Mat& img, OtherParam other_param)
             direction_tmp = getSimpleDirectionAndSpeed(buff_angle_, speed,time);
             SPEED_C.push_back(speed);
             TIME_C.push_back(time);
-            cout<<"This is the fucking speed"<<SPEED_C.at(CNT)<<endl;
-            cout<<"This is the fucking TIMEE"<<TIME_C.at(CNT)<<endl;
-            cout<<"This is the fucking number"<<CNT<<endl;
+//            cout<<"This is the fucking speed"<<SPEED_C.at(CNT)<<endl;
+//            cout<<"This is the fucking TIMEE"<<TIME_C.at(CNT)<<endl;
+//            cout<<"This is the fucking number"<<CNT<<endl;
             TIME_C.at(CNT);
             if(CNT<50){
                 CNT++;
@@ -315,8 +315,8 @@ int BuffDetector::BuffDetectTask(Mat& img, OtherParam other_param)
         }
         //        cout << "direction " << direction_tmp << endl;
         float PreAngle=0;
-//        PreAngle = getPredictAngle();
-//        cout<<"============="<<PreAngle<<"============="<<endl;
+        PreAngle = getPredictAngle();
+        cout<<"This is fucking Angle ======================================="<<PreAngle<<"============="<<endl;
 
 #else
         world_offset = Point2f(world_offset_x_ - 500, world_offset_y_  - 500);
@@ -533,15 +533,17 @@ float BuffDetector::getPredictAngle(){
    float deltasita=0.0;
    float deltaTime = 0.3;
 //   cout<<"This is for Test :: Speed::"<<SPEED_C.at(49)<<endl;
-//   if(ReFit==1){
-//   for(int i = 0; i < 40; i++){
-//        w = w - lr*(SPEED_C.at(i) - a*sin(b*TIME_C.at(i) + w)*(-a*cos(b*TIME_C.at(i)+w)));
-//   }
-//       ReFit = 2;
-//   }
+   if(ReFit < 3){
+       w=0;
+       for(int i = 0; i < 40; i++){
+            w = w - lr*(SPEED_C.at(i) - a*sin(b*TIME_C.at(i) + w)*(-a*cos(b*TIME_C.at(i)+w)));
+       }
+       ReFit ++;
+   }
 //   SPEED_C.clear();
 //   TIME_C.clear();
    //get sita
-   deltasita = -a*cos(b*(TIME_C.at(TIME_C.size())+deltaTime) + w)/b + a*cos(b*(TIME_C.at(TIME_C.size())) + w)/b + c*(deltaTime);
+   deltasita = -a*cos(b*(TIME_C.at(TIME_C.size()-1)+deltaTime) + w)/b + a*cos(b*(TIME_C.size()-1) + w)/b + c*(deltaTime);
+
    return deltasita;
 }
