@@ -23,7 +23,7 @@
 
 using namespace cv;
 using namespace std;
-//#define BUFF_DETECT_DEBUG
+#define BUFF_DETECT_DEBUG
 #ifdef BUFF_DETECT_DEBUG
 // ---- buff debug ----
 #define DEBUG_DRAW_CONTOURS
@@ -423,6 +423,7 @@ public:
 
 
     int command = 0;
+//    int CNT=0;
     float getPredictAngle();
 private:
     float w = 0;

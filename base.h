@@ -17,7 +17,7 @@
 #define BUFF_OFFSET_x 101// 1:80// 3:112
 #define BUFF_OFFSET_y 118// 1:125// 3:69
 
-#define WORLD_OFFSET_X 550
+#define WORLD_OFFSET_X 650
 #define COLOR_TH 15
 
 #define FIRE_CNT 30             // 越小响应越快
@@ -73,12 +73,12 @@
 // 摄像头坐标系到云台坐标系
 
 
-#define SHOR_X 57.0f
+#define SHOR_X 5007.0f
 #define SHOR_Y 47.5f
 #define SHOR_Z -111.37f
-#define LONG_X 0.0f
-#define LONG_Y -30.7f
-#define LONG_Z -90.0f
+#define LONG_X 30.0f
+#define LONG_Y -90.7f
+#define LONG_Z -130.0f
 #define PTZ_TO_BARREL 0.0f   // 补兵激光在２３ｍｍ下方
 
 //****** 笔记本调试相关参数 *****

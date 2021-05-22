@@ -273,12 +273,22 @@ int BuffDetector::BuffDetectTask(Mat& img, OtherParam other_param)
         int fake_direction_tmp = 0;
         float fake_speed=0;
         //15 -》3
+
         if(find_cnt)
         {
             //            direc`tion_tmp = getDirection(buff_angle_);
             direction_tmp = getSimpleDirectionAndSpeed(buff_angle_, speed,time);
             SPEED_C.push_back(speed);
             TIME_C.push_back(time);
+            cout<<"This is the fucking speed"<<SPEED_C.at(CNT)<<endl;
+            cout<<"This is the fucking TIMEE"<<TIME_C.at(CNT)<<endl;
+            cout<<"This is the fucking number"<<CNT<<endl;
+            TIME_C.at(CNT);
+            if(CNT<50){
+                CNT++;
+                return 0;
+            }
+
         }
 //        fake_direction_tmp = getSimpleDirectionAndSpeed(buff_angle_, speed,time);
         
@@ -305,8 +315,8 @@ int BuffDetector::BuffDetectTask(Mat& img, OtherParam other_param)
         }
         //        cout << "direction " << direction_tmp << endl;
         float PreAngle=0;
-        PreAngle = getPredictAngle();
-        cout<<"============="<<PreAngle<<"============="<<endl;
+//        PreAngle = getPredictAngle();
+//        cout<<"============="<<PreAngle<<"============="<<endl;
 
 #else
         world_offset = Point2f(world_offset_x_ - 500, world_offset_y_  - 500);
@@ -353,10 +363,11 @@ int BuffDetector::getSimpleDirectionAndSpeed(float angle, float &speed, float &t
             t2 =cv::getTickCount();
             float timediff = ((t2 - t1)/cv::getTickFrequency())*0.1; // 单位 s
             speed = diff_angle_/(timediff*57.3);
-            // std::cout<<"This is timediff:: "<<timediff<<" =============This is anglediff::"<<diff_angle_<<std::endl;
-            std::cout<<"The fucking speed:::"<<speed<<std::endl;
-            std::cout<<"The fucking Timer(s):::"<<((t2-t0)/cv::getTickFrequency())<<std::endl;
-            std::cout<<"cv Freq:::"<<cv::getTickFrequency()<<std::endl;
+            //std::cout<<"This is timediff:: "<<timediff<<" =============This is anglediff::"<<diff_angle_<<std::endl;
+            //std::cout<<"The fucking speed:::"<<speed<<std::endl;
+            //std::cout<<"The fucking Timer(s):::"<<((t2-t0)/cv::getTickFrequency())<<std::endl;
+//            std::cout<<"cv Freq:::"<<cv::getTickFrequency()<<std::endl;
+            time = ((t2-t0)/cv::getTickFrequency());
             ofstream TransDataSpeed("./Speed.txt",ios::app); //存放我们发送数据的文件
             ofstream TransDataTime("./Time.txt",ios::app); //存放我们发送数据的文件
             ofstream TransDataTimeDiff("./TimeDiff.txt",ios::app); //存放我们发送数据的文件
@@ -521,14 +532,15 @@ float BuffDetector::getPredictAngle(){
 //   float T;
    float deltasita=0.0;
    float deltaTime = 0.3;
-   if(ReFit==1){
-       for(int i = 0; i < CNT; i++){
-            w = w - lr*(SPEED_C.at(i) - a*sin(b*TIME_C.at(i) + w)*(-a*cos(b*TIME_C.at(i)+w)));
-       }
-       ReFit = 2;
-   }
-   SPEED_C.clear();
-   TIME_C.clear();
+//   cout<<"This is for Test :: Speed::"<<SPEED_C.at(49)<<endl;
+//   if(ReFit==1){
+//   for(int i = 0; i < 40; i++){
+//        w = w - lr*(SPEED_C.at(i) - a*sin(b*TIME_C.at(i) + w)*(-a*cos(b*TIME_C.at(i)+w)));
+//   }
+//       ReFit = 2;
+//   }
+//   SPEED_C.clear();
+//   TIME_C.clear();
    //get sita
    deltasita = -a*cos(b*(TIME_C.at(TIME_C.size())+deltaTime) + w)/b + a*cos(b*(TIME_C.at(TIME_C.size())) + w)/b + c*(deltaTime);
    return deltasita;
