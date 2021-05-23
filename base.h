@@ -8,7 +8,7 @@
 #define CAMERA1_FILEPATH "/home/andy/Adam-Vision/R-M_Robot-main/camera/camera_param/galaxy_0.xml"
 //Debug
 //#define SAVE_VIDEO_THREAD
-#define WAITKEY 1
+//#define WAITKEY 1
 #define IMAGESHOW
 //Degub End
 // 能量机关自动控制项

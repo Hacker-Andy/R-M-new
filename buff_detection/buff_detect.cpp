@@ -323,7 +323,7 @@ int BuffDetector::BuffDetectTask(Mat& img, OtherParam other_param)
         }
         //cout<<"This is fucking Angle ======================================="<<PreAngle*57<<"============="<<endl;
 	float pre_x,pre_y;
-    int R = 2;
+    int R = 1;
 	pre_x = -R * (1-cos(PreAngle));
 	pre_y = R * sin(PreAngle);
     world_offset = Point2f(pre_x , pre_y);
