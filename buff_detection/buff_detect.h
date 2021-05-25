@@ -23,7 +23,7 @@
 
 using namespace cv;
 using namespace std;
-//#define BUFF_DETECT_DEBUG
+#define BUFF_DETECT_DEBUG
 #ifdef BUFF_DETECT_DEBUG
 // ---- buff debug ----
 #define DEBUG_DRAW_CONTOURS
@@ -58,6 +58,7 @@ public:
     {
         if(type_ == INACTION)
             circle(img, small_rect_.center, 3, Scalar(0, 0, 255), -1);
+
         else if(type_ == ACTION)
             circle(img, small_rect_.center, 3, Scalar(255, 255, 255), -1);
         else
@@ -390,7 +391,7 @@ public:
     float last_angle_4ST=0;
     int area_ratio_ = 500;
     int LT=1;
-    int ReFit=1;
+    int ReFit=0;
     int CNT=0;
     //相关类申明
     AutoControl auto_control;
@@ -420,11 +421,12 @@ private:
 public:
     int waitkey_flag = 1;
     int imshow_flag = 1;
-
+    RotatedRect small_rect_pre;
 
     int command = 0;
 //    int CNT=0;
     float getPredictAngle();
+    float f_w(float w,float cnt);
 private:
     float w = 0;
     vector<float>SPEED_C;

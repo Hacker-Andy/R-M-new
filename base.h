@@ -8,7 +8,7 @@
 #define CAMERA1_FILEPATH "/home/andy/Adam-Vision/R-M_Robot-main/camera/camera_param/galaxy_0.xml"
 //Debug
 //#define SAVE_VIDEO_THREAD
-//#define WAITKEY 1
+#define WAITKEY 1
 #define IMAGESHOW
 //Degub End
 // 能量机关自动控制项
@@ -39,7 +39,7 @@
 #define DEBUG_PLOT
 //****** 线程使能 *****
 //#define SHORT_CAMERA_ENABLE 0
-#define LONG_CAMERA_ENABLE  1
+//#define LONG_CAMERA_ENABLE  1
 #define GET_STM32_THREAD
 //****** 装甲板识别配置 *****
 #define ARMOR_TRACK_BAR
@@ -84,10 +84,10 @@
 #define PTZ_TO_BARREL 0.0f   // 补兵激光在２３ｍｍ下方
 
 //****** 笔记本调试相关参数 *****
-//#define DEBUG_VIDEO 1
+#define DEBUG_VIDEO 1
 //#define FORCE_CHANGE_CAMERA
 //#define ARMOR_VIDEO_PATH "/home/andy/YIHENG_ZHBIT_VISION-infantry/R-M_Robot/Videos/test.avi"
-//#define BUFF_VIDEO_PATH "/home/andy/YIHENG_ZHBIT_VISION-infantry/R-M_Robot/Videos/TestFinials.avi"
+#define BUFF_VIDEO_PATH "/home/andy/YIHENG_ZHBIT_VISION-infantry/R-M_Robot/Videos/test.avi"
 struct OtherParam
 {
     int color = 0;       // 我方车辆颜色，0是蓝色，1是红色。用于图像预处理

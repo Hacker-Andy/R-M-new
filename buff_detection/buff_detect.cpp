@@ -213,7 +213,8 @@ bool BuffDetector::DetectBuff(Mat& img, OtherParam other_param)
     // 你需要击打的能量机关类型 1(true)击打未激活 0(false)击打激活
     for(size_t i=0; i < vec_target.size(); i++)
     {
-        Object object_tmp = vec_target.at(i);
+        Object object_tmp = vec_target.at(i);//   float W=0;
+        //   float T;
         // 普通模式击打未激活机关
         if(object_tmp.type_ == INACTION){
             find_flag = true;
@@ -249,8 +250,10 @@ bool BuffDetector::DetectBuff(Mat& img, OtherParam other_param)
 #endif
 #ifdef DEBUG_DRAW_TARGET
         final_target.DrawTarget(img);
+        small_rect_pre = final_target.small_rect_;
 #endif
     }
+
     return find_flag;
 }
 
@@ -285,7 +288,7 @@ int BuffDetector::BuffDetectTask(Mat& img, OtherParam other_param)
 //            cout<<"This is the fucking TIMEE"<<TIME_C.at(CNT)<<endl;
 //            cout<<"This is the fucking number"<<CNT<<endl;
             TIME_C.at(CNT);
-            if(CNT<50){
+            if(CNT<150){
                 CNT++;
                 return 0;
             }
@@ -296,39 +299,22 @@ int BuffDetector::BuffDetectTask(Mat& img, OtherParam other_param)
         Point2f world_offset;
         #define DIRECTION_FILTER
 #ifdef DIRECTION_FILTER
-        float world_offset_x = world_offset_x_ - 500;
-        float world_offset_y = 800 - pow((640000 - pow(world_offset_x, 2)), 0.5);
         float pre_angle;
-        if(direction_tmp == 1)  // shun
-        {
-            world_offset = Point2f(-world_offset_x, -world_offset_y);
-            pre_angle = atan(world_offset_x/(800-world_offset_y));
-        }
-        else if(direction_tmp == -1)// ni
-        {
-            world_offset = Point2f(world_offset_x, -world_offset_y);
-            pre_angle = -atan(world_offset_x/(800-world_offset_y));
-        }
-        else
-        {
-            world_offset = Point2f(0, 0);
-            pre_angle = 0;
-        }
-        //        cout << "direction " << direction_tmp << endl;
         float PreAngle=0;
         PreAngle = getPredictAngle();
-        if(PreAngle>0 && PreAngle<0.7){
+        if(PreAngle>-1 && PreAngle<1){
             pre_angle = PreAngle*57.3;
-            cout<<"This is the fucking Angle ======================================="<<pre_angle<<"============="<<endl;
+            cout<<"This is the fucking predict Angle ======================================="<<pre_angle<<"============="<<endl;
         }
-        //cout<<"This is fucking Angle ======================================="<<PreAngle*57<<"============="<<endl;
+        cout<<"This is fucking Angle ======================================="<<PreAngle<<"============="<<endl;
 	float pre_x,pre_y;
-    int R = 1;
-	pre_x = -R * (1-cos(PreAngle));
-	pre_y = R * sin(PreAngle);
+    int R = 70;
+    pre_x = R * sin(PreAngle);
+    pre_y = -R * (1-cos(PreAngle));
     world_offset = Point2f(pre_x , pre_y);
+    circle(img, small_rect_pre.center+world_offset, 3, Scalar(0, 0, 255), -1);
 #else
-        world_offset = Point2f(world_offset_x_ - 500, world_offset_y_  - 500);
+//        world_offset = Point2f(world_offset_x_ - 500, world_offset_y_  - 500);
 #endif
         solve_angle_long_.Generate3DPoints(2, world_offset);
         solve_angle_long_.getBuffAngle(1,points_2d, BULLET_SPEED
@@ -531,28 +517,33 @@ double Point_distance(Point2f p1,Point2f p2)
     double Dis=pow(pow((p1.x-p2.x),2)+pow((p1.y-p2.y),2),0.5);
     return Dis;
 }
-
+float BuffDetector::f_w(float w,float cnt){
+    float a=0.785, b=1.884, c = 1.305;
+    float fw;
+    for(int i=0; i<cnt; i++){
+        fw = (SPEED_C.at(i) - a*sin(b*TIME_C.at(i) + w)*(-a*cos(b*TIME_C.at(i)+w)));
+    }
+    return fw;
+}
 float BuffDetector::getPredictAngle(){
    //fit sin to get W
    float a=0.785, b=1.884, c = 1.305;
    // int CNT = 50;             //the number of FIT
    float lr = 0.001;   //learning rate
-//   float W=0;
-//   float T;
    float deltasita=0.0;
    float deltaTime = 0.3;
-//   cout<<"This is for Test :: Speed::"<<SPEED_C.at(49)<<endl;
+   int i = 0;
    if(ReFit < 3){
        w=0;
-       for(int i = 0; i < 40; i++){
-            w = w - lr*(SPEED_C.at(i) - a*sin(b*TIME_C.at(i) + w)*(-a*cos(b*TIME_C.at(i)+w)));
+       for(int i = 0; i < 50; i++){
+           w = w - lr*f_w(w,i);
        }
+
        ReFit ++;
    }
-//   SPEED_C.clear();
-//   TIME_C.clear();
    //get sita
    deltasita = -a*cos(b*(TIME_C.at(TIME_C.size()-1)+deltaTime) + w)/b + a*cos(b*(TIME_C.size()-1) + w)/b + c*(deltaTime);
-   deltasita = deltasita + 10;
+//   deltasita = deltasita + 10;
+   cout<<"This is niu WWWWWWWWWWWWWWWWWWWWWWWWWWW"<<w<<endl;
    return deltasita;
 }

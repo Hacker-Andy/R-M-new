@@ -106,8 +106,8 @@ void ThreadControl::GetSTM32()
         //serial_.read_data(&rx_data, mode, color, yaw_offset, pit_offset);
         other_param.mode = mode;
         other_param.color = color;
-        other_param.buff_offset_x = -85;
-        other_param.buff_offset_y = 14;
+        other_param.buff_offset_x = -94;
+        other_param.buff_offset_y = 50;
 //        GimDataPro.ProcessGimbalData(raw_gimbal_yaw, dst_gimbal_yaw);
 //        float gimbal_data = dst_gimbal_yaw;
 //        //        INFO(dst_gimbal_yaw);
@@ -250,6 +250,10 @@ void ThreadControl::ImageProcess()
 #ifdef GET_STM32_THREAD
 //        INFO(command);
         cout<<"X::"<<angle_x<<"   Y::"<<angle_y<<"   Command::"<<command<<endl;
+        //tx_data.get_xy_data(-angle_x*32767/90, -angle_y*32767/90,command);
+        //angle_x = 10;
+        //angle_y = 0;
+        //command = 1;
         tx_data.get_xy_data(-angle_x*32767/90, -angle_y*32767/90,command);
         serial_.send_data(tx_data);
 #endif

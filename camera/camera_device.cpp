@@ -44,14 +44,14 @@ int CameraDevice::init()
     //getGrabMode(cameraSptr, bContious);
     setGrabMode(cameraSptr, bContious);
     //set Time
-    setExposureTime(cameraSptr,8000,0 );
+    setExposureTime(cameraSptr,12000,0 );
     CSystem &systemObj = CSystem::getInstance();
     modifyCamralExposureTime(systemObj, cameraSptr);
     //set gamma
     double dExposureTime=0;
     getGamma(cameraSptr, dExposureTime);
     cout<<"gama :: read "<<dExposureTime<<endl;
-    setGamma(cameraSptr, 0.6 );
+    setGamma(cameraSptr, 0.3 );
     getGamma(cameraSptr, dExposureTime);
     cout<<"gama :: read "<<dExposureTime<<endl;
 //    setGainRaw(cameraSptr, 64);
